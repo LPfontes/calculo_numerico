@@ -2,6 +2,7 @@ import sympy as sp
 import math
 import matplotlib.pyplot as plt
 import numpy as np
+import re
 import pandas as pd
 x = sp.symbols('x')
 def adicionar_dados(df,n, a, b, x_n1, f_a, f_b, f_x_n1,erro, arquivo='tabela.csv'):
@@ -45,10 +46,7 @@ def Bisseccao(f,a,b,e):
         else:
             a = xi
     return xi
-S = 32  # m
-L = 30  # me
-alpha = 0.10  # kgf/m                                                                                                                                                                                                   
-expr = (2 * x / alpha) * sp.sinh((alpha * L) / (2 * x)) - S
+expr = x**3 + sp.cos(x)
 
 f = sp.lambdify(x, expr, 'numpy')
 x_vals = np.linspace(-10,10)
@@ -56,15 +54,14 @@ y_vals = f(x_vals)
 plt.plot(x_vals, y_vals, label="f(x)")
 plt.grid(True)
 plt.show()
-a = 2
-b = 3
-e = 0.01
+a = float(input("inicio do intervalo "))
+b = float(input("final do intervalo "))
+e = float(input("erro de toleracia "))
 n = iteracoes(a,b,e)
 print(n)
 if(expr.subs(x, a)*expr.subs(x, b)< 0):
     raiz = Bisseccao(expr,a,b,e)
-    print("a raiz é ",raiz)    
+    print("a raiz é ",raiz)
 else:
     print("intervalo invalido")
 
-print("a raiz é ",raiz)
